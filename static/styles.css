@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #252525;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+header {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+select, button {
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #0a84ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: #0077e6;
+}
+
+.card .btn-primary {
+    background-color: #4a4a9e;
+    border-color: #4a4a9e;
+}
+
+.card .btn-primary:hover {
+    background-color: #5757b3;
+    border-color: #5757b3;
+}
+
+.potential-matches {
+    width: 100%;
+}
+
+.card {
+    background-color: #2d2d2d;
+    border-color: #3a3a3a;
+    color: #e0e0e0;
+}
+
+.list-group-item {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    border-color: #3a3a3a;
+}
+
+.form-select, .form-control, .input-group-text {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    border-color: #3a3a3a;
+}
+
+.form-select:focus, .form-control:focus {
+    background-color: #353535;
+    color: #ffffff;
+}
+
+.alert {
+    background-color: #252525;
+    border-color: #3a3a3a;
+}
+
+footer {
+    background-color: #1a1a1a;
+    padding: 15px 0;
+    margin-top: 30px;
+}
+
+.version {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    color: #5383e8;
+}
+
+.patch-date {
+    font-size: 0.9em;
+    color: #666;
+    font-weight: normal;
+    margin-left: 5px;
+}
+
+.change-list {
+    margin-top: 8px;
+    padding-left: 15px;
+}
+
+.change-list li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.toggle-changes {
+    transition: transform 0.2s;
+}
+
+.toggle-changes.active {
+    transform: rotate(180deg);
+}
+
+.patch-changes {
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+/* Add your custom styles here */
+.patch-subheading {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #2c3e50;
+}
+
+.patch-subitem {
+    padding-left: 20px;
+    list-style-type: circle;
+}

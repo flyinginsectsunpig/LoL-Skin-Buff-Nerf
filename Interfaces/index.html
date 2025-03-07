@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League of Legends Champion Patch Notes</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='logo.svg') }}" alt="LoL Icon" class="me-2" width="40" height="40">
+                LoL Champion Patch Notes
+            </a>
+            <div class="d-flex">
+                <a href="/" class="btn btn-outline-light">
+                    <i class="fas fa-home me-2"></i>Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        {% if error_message %}
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="error-container">
+                    <h1 class="display-4 mb-4">Oops! Something went wrong</h1>
+                    <p class="lead mb-4">{{ error_message }}</p>
+                    <div class="error-actions">
+                        <a href="/" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home me-2"></i>Return Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="champion-selector mb-4">
+                    <form id="championForm" method="GET" action="/patches">
+                        <div class="input-group mb-3">
+                            <label for="champion" class="input-group-text">Champion:</label>
+                            <select name="champion" id="champion" class="form-select">
+                                {% for champion in champions %}
+                                <option value="{{ champion }}" {% if champion == current_champion %}selected{% endif %}>{{ champion }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <p class="text-muted small mt-2">Art & Sustainability Updates are excluded by default</p>
+                    </form>
+                </div>
+
+                <h1 class="champion-title mb-4">{{ current_champion }} Patch History</h1>
+
+                <div class="patch-count mb-3">
+                    <span class="badge bg-secondary">{{ patch_notes|length }} patch notes found</span>
+                </div>
+
+                <div class="patch-notes-container">
+                    {% if patch_notes %}
+                        <div class="list-group">
+                            {% for patch in patch_notes %}
+                            <div class="list-group-item mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0"><span class="version">{{ patch.version }}</span> <span class="patch-date">{{ patch.date }}</span></h5>
+                                    <button class="btn btn-sm btn-outline-secondary toggle-changes" onclick="toggleChanges(this)">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                                <div class="patch-changes mt-3" style="display: none;">
+                                    <ul class="change-list">
+                                        {% for change in patch.changes %}
+                            {% if change.startswith('<strong>') %}
+                                <li class="patch-subheading">{{ change|safe }}</li>
+                            {% elif change.startswith('•') %}
+                                <li class="patch-subitem">{{ change|safe }}</li>
+                            {% else %}
+                                <li>{{ change }}</li>
+                            {% endif %}
+                            {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            No patch notes found for {{ current_champion }}. Please try another champion.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <script>
+        document.getElementById('champion').addEventListener('change', function() {
+            this.form.submit();
+        });
+        </script>
+        {% endif %}
+    </main>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">League of Legends and Alistar are trademarks of Riot Games, Inc.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Auto-submit form when champion selection changes
+        document.getElementById('champion').addEventListener('change', function() {
+            this.form.submit();
+        });
+
+        // Function to toggle patch changes visibility
+        function toggleChanges(button) {
+            const patchItem = button.closest('.list-group-item');
+            const changesSection = patchItem.querySelector('.patch-changes');
+
+            if (changesSection.style.display === 'none') {
+                changesSection.style.display = 'block';
+                button.classList.add('active');
+            } else {
+                changesSection.style.display = 'none';
+                button.classList.remove('active');
+            }
+        }
+
+        // Open the first patch by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstPatch = document.querySelector('.list-group-item');
+            if (firstPatch) {
+                const toggleButton = firstPatch.querySelector('.toggle-changes');
+                toggleChanges(toggleButton);
+            }
+        });
+    </script>
+</body>
+</html>
